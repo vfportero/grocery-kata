@@ -1,0 +1,11 @@
+.product {
+    height: 100px;
+    border: solid;
+    display: flex;
+    flex-direction: column;
+
+    .product-image {
+        max-height: 60px;
+        object-fit: cover;
+    }
+}
