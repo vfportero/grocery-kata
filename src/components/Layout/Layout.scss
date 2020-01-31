@@ -1,4 +1,17 @@
-.container { 
-    max-width: 1200px;
-    margin: 0 auto;
+@import '../../styles/variables.scss';
+
+.layout {
+    .background {
+        height: 800px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0px;
+        background: linear-gradient(to bottom,rgba(255,255,255,0),white),linear-gradient(to right,$color-primary,$color-primary);
+        z-index: 0;
+    }
+    .container { 
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }

@@ -1,12 +1,30 @@
+@import "../../styles/common.scss";
 .product-list {
-    text-align: center;
-    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+        margin: 0 auto;
+    }
 
     .grid {
+        margin-top: 16px;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+
+
+        grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 1fr;
-        grid-column-gap: 20px;
-        grid-row-gap: 20px;
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+
+        @media (min-width: $mobile) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (min-width: $desktop) {
+            grid-template-columns: repeat(4, 1fr);
+            grid-column-gap: 32px;
+            grid-row-gap: 32px;
+        }
     }
 }

@@ -1,6 +1,26 @@
+@import "../../styles/variables.scss";
+
 .main-grid {
     display: grid;
-    grid-template-columns: 0.75fr 0.25fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    z-index: 1;
+    padding: 20px;
+    background-color: #eee;
+    margin-top: 40px;
+    position: relative;
+    border-radius: 16px;
+    box-shadow: 17px 16px 18px -9px rgba(0, 0, 0, 0.75);
+    margin: 16px;
 
+    .aside-col {
+        display: none;
+    }
+
+    @media (min-width: $desktop) {
+        padding: 20px 50px;
+        grid-template-columns: 0.75fr 0.25fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 20px;
+        
+    }
 }

@@ -24,7 +24,7 @@ export default class ProductList extends React.Component<Props, State> {
     renderProducts() {
         if (this.state.grocery.length) {
             return this.state.grocery.map((p) => {
-                return <Product product={p}></Product>
+                return <Product product={p} key={p.id}></Product>
             })
         }
         return [];
@@ -35,7 +35,7 @@ export default class ProductList extends React.Component<Props, State> {
         return (
             
             <div className="product-list">
-                <img src="/logo192.png" alt="Grocery-Kata"/>
+                <img className="logo" src="/logo192.png" alt="Grocery-Kata"/>
                 <div className="grid">
                     {products}
                 </div>

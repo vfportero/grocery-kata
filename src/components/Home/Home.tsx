@@ -13,7 +13,7 @@ export default class Home extends React.Component<Props, State> {
 
   render () {
     return (
-        <div className="main-grid">
+        <div className="main-grid card">
             <div className="main-col">
                 <ProductList />
             </div>
