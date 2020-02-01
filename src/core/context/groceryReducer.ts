@@ -8,8 +8,11 @@ import { GroceryState } from "../models/StateModel";
 
 export const initialState: GroceryState = {
     products: {
-      allIds: [],
-      byId: {}
+      items: {
+        allIds: [],
+        byId: {},
+      },
+      page: 1
     },
     cart: {
       items: {
@@ -41,16 +44,18 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
         case ActionType.FetchProductsSuccess: {
             const products = action.payload as ProductModel[];
             
-            state.products.allIds = [];
-            state.products.byId = {};
+            state.products.page++;
             for (const product of products) {
-              state.products.allIds.push(product.id);
-              state.products.byId[product.id] = product;
+              state.products.items.allIds.push(product.id);
+              state.products.items.byId[product.id] = product;
             }
 
             return {
               ...state,
-              products:state.products, 
+              products: {
+                page: state.products.page + 1,
+                items: state.products.items
+              },
               loadingData: false
             };
         }

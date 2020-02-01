@@ -6,9 +6,14 @@ export interface NormalizedObjects<T> {
     allIds: string[];
 }
 
+export interface ProductsState {
+    items: NormalizedObjects<ProductModel>,
+    page: number
+}
+
 
 export interface GroceryState {
-    products: NormalizedObjects<ProductModel>,
+    products: ProductsState,
     cart: CartModel,
     loadingData: boolean,
     error: string

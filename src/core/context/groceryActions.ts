@@ -13,7 +13,7 @@ export enum ActionType {
 }
 
 export interface GroceryActionsDispatcher {
-    fetchProducts(): void;
+    fetchProducts(page?: number): void;
     addToCart(product: ProductModel): void;
     removeOneUnitFromCart(productId: string): void;
     addOneUnitFromCart(productId: string): void;
@@ -37,8 +37,8 @@ export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDis
         addOneUnitFromCart: (productId: string) => {
             dispatch({ type: ActionType.AddOneUnitFromCart, payload: productId })
         },
-        fetchProducts: () => {
-            ApiService.getAllProducts().then(
+        fetchProducts: (page: number) => {
+            ApiService.getProductsPage(page).then(
                 (apiResponse) => {
                     if (apiResponse.status === 200) {
                         dispatch({ type: ActionType.FetchProductsSuccess, payload: apiResponse.data })
