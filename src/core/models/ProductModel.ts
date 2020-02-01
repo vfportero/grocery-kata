@@ -5,5 +5,5 @@ export interface ProductModel {
     productName: string;
     price: number;
     productDescription: string;
-    favorite: boolean;
+    favorite: number;
 }

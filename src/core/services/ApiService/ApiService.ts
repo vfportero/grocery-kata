@@ -8,6 +8,13 @@ class ApiService {
     getAllProducts() : Promise<AxiosResponse<ProductModel[]>> {
         return axios.get<ProductModel[]>(this.baseApiUrl)
     }
+    getFavoriteProducts() : Promise<AxiosResponse<ProductModel[]>> {
+        return axios.get<ProductModel[]>(this.baseApiUrl, {
+            params: {
+                favorite:1
+            }
+        })
+    }
     getProductsPage(page: number) : Promise<AxiosResponse<ProductModel[]>> {
         return axios.get<ProductModel[]>(this.baseApiUrl, {
             params: {

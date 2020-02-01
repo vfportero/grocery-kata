@@ -6,8 +6,12 @@ export interface NormalizedObjects<T> {
     allIds: string[];
 }
 
+export interface ProductsNormalized extends NormalizedObjects<ProductModel> {
+    favoriteIds: string[]
+}
+
 export interface ProductsState {
-    items: NormalizedObjects<ProductModel>,
+    items: ProductsNormalized,
     page: number
 }
 

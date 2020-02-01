@@ -11,8 +11,8 @@ test('renders Product', () => {
     productDescription: '',
     stock: 1,
     price: 100,
-    favorite: false
+    favorite: 0
   }
-  const renderResult = render(<Product product={model} />);
+  const renderResult = render(<Product {...model} />);
   expect(true).toBeTruthy();
 });

@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom'
 
 const Product: React.FC<ProductModel> = (product) => {
 
-    const {state, dispatch} = React.useContext<any>(GroceryContext);
+    const {dispatch} = React.useContext<any>(GroceryContext);
     const dispatcher = createActions(dispatch)
     const isMobileResolution = useMediaQuery({
         query: '(max-device-width: 600px)'

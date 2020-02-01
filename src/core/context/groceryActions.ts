@@ -7,6 +7,10 @@ export enum ActionType {
     FetchProductsSuccess = "FetchProductsSuccess",
     FetchProductsError = "FetchProductsError",
 
+    FetchFavoriteProducts = "FetchFavoriteProducts",
+    FetchFavoriteProductsSuccess = "FetchFavoriteProductsSuccess",
+    FetchFavoriteProductsError = "FetchFavoriteProductsError",
+
     AddToCart = "AddToCart",
     RemoveOneUnitFromCart = "RemoveOneUnitFromCart",
     AddOneUnitFromCart = "AddOneUnitFromCart",
@@ -17,6 +21,7 @@ export enum ActionType {
 
 export interface GroceryActionsDispatcher {
     fetchProducts(page?: number): void;
+    fetchFavoriteProducts(): void;
     addToCart(product: ProductModel): void;
     removeOneUnitFromCart(productId: string): void;
     addOneUnitFromCart(productId: string): void;
@@ -53,17 +58,34 @@ export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDis
                     }
                     
                 }
-            );            
+            ).catch(error => {
+                dispatch({ type: ActionType.FetchProductsError, payload: error })
+            });
+        },
+        fetchFavoriteProducts: () => {
+            dispatch({ type: ActionType.FetchFavoriteProducts })
+            ApiService.getFavoriteProducts().then(
+                (apiResponse) => {
+                    if (apiResponse.status === 200) {
+                        dispatch({ type: ActionType.FetchFavoriteProductsSuccess, payload: apiResponse.data })
+                    } else {
+                        dispatch({ type: ActionType.FetchFavoriteProductsError, payload: apiResponse.statusText })
+                    }
+                    
+                }
+            ).catch(error => {
+                dispatch({ type: ActionType.FetchProductsError, payload: error })
+            });;
         },
         setProductAsFavorite: (product: ProductModel) => {
             dispatch({ type: ActionType.SetProductAsFavorite, payload: product.id });
             // OPTIMISTIC PATCH... CHANGE STATE WITHOUT WAIT API RESPONSE
-            ApiService.patchProduct(product.id, {...product, favorite: true});
+            ApiService.patchProduct(product.id, {...product, favorite: 1});
         },
         setProductAsNotFavorite: (product: ProductModel) => {
             dispatch({ type: ActionType.SetProductAsNotFavorite, payload: product.id })
             // OPTIMISTIC PATCH... CHANGE STATE WITHOUT WAIT API RESPONSE
-            ApiService.patchProduct(product.id, {...product, favorite: false});
+            ApiService.patchProduct(product.id, {...product, favorite: 0});
         }
     };
   }

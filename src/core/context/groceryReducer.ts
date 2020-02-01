@@ -10,6 +10,7 @@ export const initialState: GroceryState = {
     products: {
       items: {
         allIds: [],
+        favoriteIds: [],
         byId: {},
       },
       page: 0
@@ -34,6 +35,7 @@ export interface DispatchAction {
 export const groceryReducer = (state: GroceryState = initialState, action: DispatchAction) => {
     console.log("ACTION DISPATCHED", action);
     switch (action.type) {
+        case ActionType.FetchFavoriteProducts:
         case ActionType.FetchProducts: {
             return {
               ...state,
@@ -45,8 +47,14 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
             const products = action.payload as ProductModel[];
             
             for (const product of products) {
-              state.products.items.allIds.push(product.id);
-              state.products.items.byId[product.id] = product;
+              if (state.products.items.favoriteIds.every(p => p !== product.id)) {
+                state.products.items.allIds.push(product.id);
+                state.products.items.byId[product.id] = product;
+
+                if (product.favorite) {
+                  state.products.items.favoriteIds.push(product.id);
+                }
+              }
             }
 
             return {
@@ -58,6 +66,22 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
               loadingData: false
             };
         }
+        case ActionType.FetchFavoriteProductsSuccess: {
+          const products = action.payload as ProductModel[];
+          
+          for (const product of products) {
+            if (state.products.items.favoriteIds.every(p => p !== product.id)) {
+              state.products.items.favoriteIds.push(product.id);
+              state.products.items.allIds.push(product.id);
+              state.products.items.byId[product.id] = product;
+            }
+          }
+
+          return {
+            ...state
+          };
+        }
+        case ActionType.FetchFavoriteProductsError:
         case ActionType.FetchProductsError: {
           return {
             ...state,
@@ -149,7 +173,8 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
           if (!product) {
             return state;
           }
-          product.favorite = true;
+          state.products.items.favoriteIds.push(product.id);
+          product.favorite = 1;
 
           return {
             ...state,
@@ -161,7 +186,9 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
           if (!product) {
             return state;
           }
-          product.favorite = false;
+          product.favorite = 0;
+          state.products.items.favoriteIds = state.products.items.favoriteIds.filter(i => i !== productId);
+
 
           return {
             ...state,
