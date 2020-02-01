@@ -1,5 +1,6 @@
 import { ProductModel } from "../../models/ProductModel";
 import axios, { AxiosResponse } from 'axios';
+import Product from "../../../components/Product/Product";
 
 class ApiService {
     baseApiUrl = 'http://localhost:3000/grocery';
@@ -14,6 +15,9 @@ class ApiService {
                 '_limit': 16
             }
         })
+    }
+    patchProduct(productId: string, product: ProductModel): Promise<AxiosResponse> {
+        return axios.patch(`${this.baseApiUrl}/${productId}`, product);
     }
 }
 

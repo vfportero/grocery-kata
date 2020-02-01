@@ -35,6 +35,10 @@
         &.favorite {
             mask-image: url(/heart-filled.svg);
             background-color: red;
+
+            &:hover {
+                mask-image: url(/heart.svg);
+            }
         }
     }
 

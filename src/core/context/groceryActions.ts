@@ -9,7 +9,10 @@ export enum ActionType {
 
     AddToCart = "AddToCart",
     RemoveOneUnitFromCart = "RemoveOneUnitFromCart",
-    AddOneUnitFromCart = "AddOneUnitFromCart"
+    AddOneUnitFromCart = "AddOneUnitFromCart",
+
+    SetProductAsFavorite = "SetProductAsFavorite",
+    SetProductAsNotFavorite = "SetProductAsNotFavorite",
 }
 
 export interface GroceryActionsDispatcher {
@@ -17,6 +20,8 @@ export interface GroceryActionsDispatcher {
     addToCart(product: ProductModel): void;
     removeOneUnitFromCart(productId: string): void;
     addOneUnitFromCart(productId: string): void;
+    setProductAsFavorite(product: ProductModel): void;
+    setProductAsNotFavorite(product: ProductModel): void;
 };
 
 export const fetchProductsSuccess = (products: ProductModel[]): DispatchAction => {
@@ -48,10 +53,18 @@ export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDis
                     }
                     
                 }
-            );
-
-            
+            );            
         },
+        setProductAsFavorite: (product: ProductModel) => {
+            dispatch({ type: ActionType.SetProductAsFavorite, payload: product.id });
+            // OPTIMISTIC PATCH... CHANGE STATE WITHOUT WAIT API RESPONSE
+            ApiService.patchProduct(product.id, {...product, favorite: true});
+        },
+        setProductAsNotFavorite: (product: ProductModel) => {
+            dispatch({ type: ActionType.SetProductAsNotFavorite, payload: product.id })
+            // OPTIMISTIC PATCH... CHANGE STATE WITHOUT WAIT API RESPONSE
+            ApiService.patchProduct(product.id, {...product, favorite: false});
+        }
     };
   }
   

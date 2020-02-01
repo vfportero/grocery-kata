@@ -143,6 +143,30 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
             }
           }
         }
+        case ActionType.SetProductAsFavorite: {
+          const productId = action.payload as string;
+          const product = selectProduct(state, productId);
+          if (!product) {
+            return state;
+          }
+          product.favorite = true;
+
+          return {
+            ...state,
+          };
+        }
+        case ActionType.SetProductAsNotFavorite: {
+          const productId = action.payload as string;
+          const product = selectProduct(state, productId);
+          if (!product) {
+            return state;
+          }
+          product.favorite = false;
+
+          return {
+            ...state,
+          };
+        }
         default:
             return state;
     }
