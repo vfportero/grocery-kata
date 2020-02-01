@@ -10,6 +10,7 @@
     .grid {
         margin-top: 16px;
         display: grid;
+        position: relative;
 
 
         grid-template-columns: repeat(2, 1fr);

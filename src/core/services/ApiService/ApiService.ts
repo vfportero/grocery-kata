@@ -3,8 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 
 class ApiService {
     
-    getAllProducts() : Promise<AxiosResponse<Array<ProductModel>>> {
-        return axios.get<Array<ProductModel>>('http://localhost:3000/grocery')
+    getAllProducts() : Promise<AxiosResponse<ProductModel[]>> {
+        return axios.get<ProductModel[]>('http://localhost:3000/grocery')
     }
 }
 

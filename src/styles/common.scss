@@ -24,7 +24,7 @@ button {
     &:not(.disabled) {
         cursor: pointer;
         &:hover{
-            opacity: 0.90;
+            opacity: 0.80;
         }
     
         &:active {
@@ -37,4 +37,11 @@ button {
         cursor: not-allowed;
         opacity: 0.5;
     }
+
+    &.large {
+        height: 48px;
+        font-size: 22px;
+        padding: 0 20px;
+    }
+    
 }

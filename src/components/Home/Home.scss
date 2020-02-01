@@ -11,6 +11,7 @@
     border-radius: 16px;
     box-shadow: 17px 16px 18px -9px rgba(0, 0, 0, 0.75);
     margin: 16px;
+    min-height: 90vh;
 
     .aside-col {
         display: none;
@@ -21,6 +22,18 @@
         grid-template-columns: 0.75fr 0.25fr;
         grid-template-rows: 1fr;
         grid-column-gap: 20px;
+
+        height: calc(100vh - 120px);
+
+        .main-col {
+            overflow-y: scroll;
+        }
+
+        .aside-col {
+            display: block;
+            border-left: solid 2px $color-primary;
+            max-height: calc(100vh - 120px);
+        }
         
     }
 }

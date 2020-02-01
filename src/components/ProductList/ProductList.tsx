@@ -1,47 +1,47 @@
 import * as React from 'react';
 import './ProductList.scss';
 import Product from '../Product/Product';
-import ApiService from '../../core/services/ApiService/ApiService';
+import Spinner from '../Spinner/Spinner';
+import createActions from '../../core/context/groceryActions';
+import GroceryContext from '../../core/context/GroceryContext';
+import { useContext, useEffect } from 'react';
 import { ProductModel } from '../../core/models/ProductModel';
 
-interface Props {}
 
-interface State {
-    grocery: Array<ProductModel>
-};
+const ProductList: React.FC = () => {
 
-export default class ProductList extends React.Component<Props, State> {
-    state: State = { 
-          grocery: []
-    };
+    const {state, dispatch} = useContext<any>(GroceryContext);
+    const dispatcher = createActions(dispatch)
 
-    componentDidMount() {
-        ApiService.getAllProducts().then(grocery => {
-            this.setState({grocery: grocery.data})
-        })
-    }
+    useEffect(() => {
+        if (state.products.length === 0 && state.loadingData === false) {
+            dispatcher.fetchProducts();
+        }
+    }, [state.products]);
 
-    renderProducts() {
-        if (this.state.grocery.length) {
-            return this.state.grocery.map((p) => {
-                return <Product product={p} key={p.id}></Product>
+    const renderProducts = () => {
+        if (state.loadingData) {
+            return <Spinner />;
+        } else {
+            return state.products.map((p: ProductModel) => {
+                return <Product {...p} key={p.id}></Product>
             })
         }
-        return [];
+        
     }
 
-    render () {
-        const products = this.renderProducts();
-        return (
-            
-            <div className="product-list">
-                <img className="logo" src="/logo192.png" alt="Grocery-Kata"/>
-                <div className="grid">
-                    {products}
-                </div>
-            </div>
-            
+    return (
         
-        );
-  }
+        <div className="product-list">
+            <img className="logo" src="/logo192.png" alt="Grocery-Kata"/>
+            <div className="grid">
+                {renderProducts()}
+            </div>
+        </div>
+        
+    
+    );
+  
 }
+
+export default ProductList;
