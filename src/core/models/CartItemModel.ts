@@ -1,12 +1,12 @@
-import { ProductModel } from "./ProductModel";
+import { NormalizedObjects } from "./StateModel";
 
 export interface CartModel {
-    items: CartItemModel[],
+    items: NormalizedObjects<CartItemModel>,
     totalPrice: number
 }
 
 export interface CartItemModel {
-    product: ProductModel,
+    productId: string,
     quantity: number, 
     totalPrice: number
 }

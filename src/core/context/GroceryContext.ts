@@ -1,5 +1,5 @@
 import React from "react";
-import { GroceryState } from "./groceryReducer";
+import { GroceryState } from "../models/StateModel";
 
 const GroceryContext = React.createContext({});
 export const GroceryProvider = GroceryContext.Provider;

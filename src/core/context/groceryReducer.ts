@@ -1,33 +1,34 @@
 import { ProductModel } from "../models/ProductModel";
-
-import { Action } from "redux";
 import { ActionType } from "./groceryActions";
-import { CartItemModel, CartModel } from "../models/CartItemModel";
+import { selectProduct, selectCartItem } from "./gorcerySelector";
+import { GroceryState } from "../models/StateModel";
 
 
-export interface GroceryState {
-    products: ProductModel[],
-    cart: CartModel,
-    loadingData: boolean,
-    error: string
-}
+
 
 export const initialState: GroceryState = {
-    products: [],
+    products: {
+      allIds: [],
+      byId: {}
+    },
     cart: {
-      items: [],
+      items: {
+        allIds: [],
+        byId: {}  
+      },
       totalPrice: 0
     },
     loadingData: false,
     error: ''
 };
 
-export interface DispatchAction extends Action {
-    payload: any;
+export interface DispatchAction {
+  type: ActionType
+  payload: any;
 }
 
 
-export const groceryReducer = (state = initialState, action: DispatchAction) => {
+export const groceryReducer = (state: GroceryState = initialState, action: DispatchAction) => {
     console.log("ACTION DISPATCHED", action);
     switch (action.type) {
         case ActionType.FetchProducts: {
@@ -38,11 +39,18 @@ export const groceryReducer = (state = initialState, action: DispatchAction) => 
             };
         }
         case ActionType.FetchProductsSuccess: {
+            const products = action.payload as ProductModel[];
+            
+            state.products.allIds = [];
+            state.products.byId = {};
+            for (const product of products) {
+              state.products.allIds.push(product.id);
+              state.products.byId[product.id] = product;
+            }
+
             return {
               ...state,
-              products: [
-                ...action.payload
-              ],
+              products:state.products, 
               loadingData: false
             };
         }
@@ -54,28 +62,80 @@ export const groceryReducer = (state = initialState, action: DispatchAction) => 
           };
         }
         case ActionType.AddToCart: {
-          let cartItem = state.cart.items.find(c => c.product.id === action.payload.id);
+          const productId = action.payload as string;
+          const product = selectProduct(state, productId);
+
+          if (!product || product.stock <= 0) {
+            return state;
+          }
+          let cartItem = selectCartItem(state, productId);
           if (!cartItem) {
             cartItem = {
-              product: action.payload,
-              quantity: 0, 
-              totalPrice: action.payload.price
+              productId,
+              quantity: 0,
+              totalPrice: product.price
             }
 
-            state.cart.items = [
-              ...state.cart.items,
-              cartItem
-            ]
+            state.cart.items.allIds.push(productId);
+            state.cart.items.byId[productId] = cartItem;
+          }
 
-          } 
           cartItem.quantity++;
-          cartItem.totalPrice = cartItem.quantity * cartItem.product.price;
+          cartItem.totalPrice = cartItem.quantity * product.price;
+          product.stock --;
+          
           
           return {
             ...state,
             cart: {
               items: state.cart.items,
-              totalPrice: state.cart.totalPrice + cartItem.product.price
+              totalPrice: state.cart.totalPrice + product.price
+            }
+          }
+        }
+        case ActionType.RemoveOneUnitFromCart: {
+          const productId = action.payload as string;
+          const cartItem = selectCartItem(state, productId);
+          const product = selectProduct(state, productId);
+          if (!cartItem || !product) {
+            return state;
+          }
+
+          state.cart.totalPrice -= product.price;
+          cartItem.totalPrice -= product.price;
+          product.stock++;
+
+          if (cartItem.quantity === 1) {
+            delete state.cart.items.byId[productId];
+            state.cart.items.allIds = state.cart.items.allIds.filter(i => i !== productId);
+          } else {
+            cartItem.quantity--;
+          }
+
+          return {
+            ...state,
+            cart: {
+              ...state.cart
+            }
+          }
+        }
+        case ActionType.AddOneUnitFromCart: {
+          const productId = action.payload as string;
+          const cartItem = selectCartItem(state, productId);
+          const product = selectProduct(state, productId);
+          if (!cartItem || !product || product.stock <= 0) {
+            return state;
+          }
+
+          state.cart.totalPrice += product.price;
+          cartItem.totalPrice += product.price;
+          product.stock--;
+          cartItem.quantity++;
+
+          return {
+            ...state,
+            cart: {
+              ...state.cart
             }
           }
         }

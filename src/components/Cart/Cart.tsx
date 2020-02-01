@@ -1,17 +1,17 @@
 import * as React from 'react';
 import './Cart.scss';
 import GroceryContext from '../../core/context/GroceryContext';
-import { ProductModel } from '../../core/models/ProductModel';
 import CartItem from '../CartItem/CartItem';
-import { CartItemModel } from '../../core/models/CartItemModel';
+import { GroceryState } from '../../core/models/StateModel';
 
 const Cart: React.FC = () => {
 
   const {state, dispatch} = React.useContext<any>(GroceryContext);
+  const groceryState = state as GroceryState;
 
   const renderCartProducts = () => {
-    return state.cart.items.map((p: CartItemModel) => {
-        return <CartItem {...p} key={p.product.id}></CartItem>
+    return groceryState.cart.items.allIds.map((productId: string) => {
+        return <CartItem {...groceryState.cart.items.byId[productId]} key={productId}></CartItem>
     })
   }
 

@@ -7,12 +7,16 @@ export enum ActionType {
     FetchProductsSuccess = "FetchProductsSuccess",
     FetchProductsError = "FetchProductsError",
 
-    AddToCart = "AddToCart"
+    AddToCart = "AddToCart",
+    RemoveOneUnitFromCart = "RemoveOneUnitFromCart",
+    AddOneUnitFromCart = "AddOneUnitFromCart"
 }
 
 export interface GroceryActionsDispatcher {
     fetchProducts(): void;
     addToCart(product: ProductModel): void;
+    removeOneUnitFromCart(productId: string): void;
+    addOneUnitFromCart(productId: string): void;
 };
 
 export const fetchProductsSuccess = (products: ProductModel[]): DispatchAction => {
@@ -22,24 +26,16 @@ export const fetchProductsSuccess = (products: ProductModel[]): DispatchAction =
     }
 }
 
-function createActions(dispatch: React.Dispatch<any>) : GroceryActionsDispatcher{
+export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDispatcher => {
     return {
-        // closeToast: () => dispatch({type: CLOSE_TOAST}),
-        // setCharacterProperty: (propertyName:string, value: any) => dispatch({ type: SET_CHARACTER_PROPERTY, payload: { propertyName, value} }),
-        // setCharacterStat: (stat: CharStatName, value: number) => dispatch({type: SET_CHARACTER_STAT, payload: {stat, value}}),
-        // setCharacterIniciative: (value?: number) => dispatch({type: SET_CHARACTER_INICIATIVE, payload: {value}}),
-
-        // postCharacter: (character: Character) => {
-        //     console.log(character);
-        //     DatabaseService.commitCharacter(character).then(
-        //         (characterId) => {
-        //             dispatch({ type: POST_CHARACTER_SUCCESS, payload: characterId })
-        //         }
-        //     );
-        //     dispatch({ type: POST_CHARACTER })
-        // },
         addToCart: (product: ProductModel) => {
-            dispatch({ type: ActionType.AddToCart, payload: product })
+            dispatch({ type: ActionType.AddToCart, payload: product.id })
+        },
+        removeOneUnitFromCart: (productId: string) => {
+            dispatch({ type: ActionType.RemoveOneUnitFromCart, payload: productId })
+        },
+        addOneUnitFromCart: (productId: string) => {
+            dispatch({ type: ActionType.AddOneUnitFromCart, payload: productId })
         },
         fetchProducts: () => {
             ApiService.getAllProducts().then(
