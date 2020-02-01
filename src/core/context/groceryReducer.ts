@@ -12,7 +12,7 @@ export const initialState: GroceryState = {
         allIds: [],
         byId: {},
       },
-      page: 1
+      page: 0
     },
     cart: {
       items: {
@@ -44,7 +44,6 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
         case ActionType.FetchProductsSuccess: {
             const products = action.payload as ProductModel[];
             
-            state.products.page++;
             for (const product of products) {
               state.products.items.allIds.push(product.id);
               state.products.items.byId[product.id] = product;

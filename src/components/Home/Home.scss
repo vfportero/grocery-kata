@@ -13,10 +13,6 @@
     margin: 16px;
     min-height: 90vh;
 
-    .aside-col {
-        display: none;
-    }
-
     @media (min-width: $desktop) {
         padding: 20px 50px;
         grid-template-columns: 0.75fr 0.25fr;
@@ -28,9 +24,7 @@
         .main-col {
             overflow: hidden;
         }
-
         .aside-col {
-            display: block;
             border-left: solid 2px $color-primary;
             max-height: calc(100vh - 120px);
         }

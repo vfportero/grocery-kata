@@ -38,7 +38,8 @@ export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDis
             dispatch({ type: ActionType.AddOneUnitFromCart, payload: productId })
         },
         fetchProducts: (page: number) => {
-            ApiService.getProductsPage(page).then(
+            dispatch({ type: ActionType.FetchProducts })
+            ApiService.getProductsPage(page + 1).then(
                 (apiResponse) => {
                     if (apiResponse.status === 200) {
                         dispatch({ type: ActionType.FetchProductsSuccess, payload: apiResponse.data })
@@ -48,7 +49,8 @@ export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDis
                     
                 }
             );
-            dispatch({ type: ActionType.FetchProducts })
+
+            
         },
     };
   }

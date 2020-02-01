@@ -8,8 +8,8 @@
     margin: 25vh auto;
     -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
     animation: sk-rotateplane 1.2s infinite ease-in-out;
-    left: calc(50% - 30px);
-    position: absolute;
+    left: 40%;
+    position: fixed;
   }
   
   @-webkit-keyframes sk-rotateplane {

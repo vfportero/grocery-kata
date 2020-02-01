@@ -5,6 +5,7 @@ import Home from './components/Home/Home';
 
 import { GroceryProvider } from './core/context/GroceryContext';
 import { groceryReducer, initialState } from './core/context/groceryReducer';
+import Cart from './components/Cart/Cart';
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(groceryReducer, initialState);
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Switch>
             <Route path='/' exact component={Home}/>
+            <Route path='/cart' exact component={Cart}/>
           </Switch>
         </BrowserRouter>
       </Layout>
