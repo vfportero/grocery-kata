@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 const Cart: React.FC = () => {
 
-  const {state, dispatch} = React.useContext<any>(GroceryContext);
+  const {state} = React.useContext<any>(GroceryContext);
   const groceryState = state as GroceryState;
   const history = useHistory();
 

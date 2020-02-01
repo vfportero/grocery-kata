@@ -1,6 +1,5 @@
 import { ProductModel } from "../../models/ProductModel";
 import axios, { AxiosResponse } from 'axios';
-import Product from "../../../components/Product/Product";
 
 class ApiService {
     baseApiUrl = 'http://localhost:3000/grocery';

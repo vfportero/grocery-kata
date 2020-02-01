@@ -5,5 +5,5 @@ import App from './App';
 test('renders App', () => {
   const renderResult = render(<App />);
   
-  expect(true).toBeTruthy();
+  expect(renderResult).toBeDefined();
 });

@@ -7,7 +7,6 @@ import GroceryContext from '../../core/context/GroceryContext';
 import { useContext, useEffect, useState } from 'react';
 import { GroceryState } from '../../core/models/StateModel';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { selectProduct } from '../../core/context/gorcerySelector';
 
 enum ProductFilter {
     All,
