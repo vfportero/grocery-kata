@@ -12,12 +12,12 @@ const CartItem: React.FC<CartItemModel> = (cartItem) => {
   const dispatcher = createActions(dispatch)
 
   let removeOneUnitFromCart = () => {
-    dispatcher.removeOneUnitFromCart(cartItem.productId);
+    dispatcher.removeOneProductUnitFromCart(cartItem.productId);
   }
   
   let addOneUnitFromCart = () => {
     if (productAvailable()) {
-      dispatcher.addOneUnitFromCart(cartItem.productId);
+      dispatcher.addOneProductUnitToCart(cartItem.productId);
     }
     
   }

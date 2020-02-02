@@ -89,39 +89,7 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
             error: action.payload
           };
         }
-        case ActionType.AddToCart: {
-          const productId = action.payload as string;
-          const product = selectProduct(state, productId);
-
-          if (!product || product.stock <= 0) {
-            return state;
-          }
-          let cartItem = selectCartItem(state, productId);
-          if (!cartItem) {
-            cartItem = {
-              productId,
-              quantity: 0,
-              totalPrice: product.price
-            }
-
-            state.cart.items.allIds.push(productId);
-            state.cart.items.byId[productId] = cartItem;
-          }
-
-          cartItem.quantity++;
-          cartItem.totalPrice = cartItem.quantity * product.price;
-          product.stock --;
-          
-          
-          return {
-            ...state,
-            cart: {
-              items: state.cart.items,
-              totalPrice: state.cart.totalPrice + product.price
-            }
-          }
-        }
-        case ActionType.RemoveOneUnitFromCart: {
+        case ActionType.RemoveOneProductUnitFromCart: {
           const productId = action.payload as string;
           const cartItem = selectCartItem(state, productId);
           const product = selectProduct(state, productId);
@@ -147,12 +115,23 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
             }
           }
         }
-        case ActionType.AddOneUnitFromCart: {
+        case ActionType.AddOneProductUnitToCart: {
           const productId = action.payload as string;
-          const cartItem = selectCartItem(state, productId);
           const product = selectProduct(state, productId);
-          if (!cartItem || !product || product.stock <= 0) {
+          if (!product || product.stock <= 0) {
             return state;
+          }
+
+          let cartItem = selectCartItem(state, productId);
+          if (!cartItem) {
+            cartItem = {
+              productId,
+              quantity: 0,
+              totalPrice: product.price
+            }
+
+            state.cart.items.allIds.push(productId);
+            state.cart.items.byId[productId] = cartItem;
           }
 
           state.cart.totalPrice += product.price;

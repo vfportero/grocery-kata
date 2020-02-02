@@ -24,7 +24,7 @@ const Product: React.FC<ProductModel> = (product) => {
 
     let addToCart = () => {
         if (productAvailable()) {
-            dispatcher.addToCart(product);
+            dispatcher.addOneProductUnitToCart(product.id);
             if (!isDesktopResolution) {
                 history.push('/cart')
             }

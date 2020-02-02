@@ -11,9 +11,8 @@ export enum ActionType {
     FetchFavoriteProductsSuccess = "FetchFavoriteProductsSuccess",
     FetchFavoriteProductsError = "FetchFavoriteProductsError",
 
-    AddToCart = "AddToCart",
-    RemoveOneUnitFromCart = "RemoveOneUnitFromCart",
-    AddOneUnitFromCart = "AddOneUnitFromCart",
+    RemoveOneProductUnitFromCart = "RemoveOneProductUnitFromCart",
+    AddOneProductUnitToCart = "AddOneProductUnitToCart",
 
     SetProductAsFavorite = "SetProductAsFavorite",
     SetProductAsNotFavorite = "SetProductAsNotFavorite",
@@ -22,9 +21,8 @@ export enum ActionType {
 export interface GroceryActionsDispatcher {
     fetchProducts(page?: number): void;
     fetchFavoriteProducts(): void;
-    addToCart(product: ProductModel): void;
-    removeOneUnitFromCart(productId: string): void;
-    addOneUnitFromCart(productId: string): void;
+    removeOneProductUnitFromCart(productId: string): void;
+    addOneProductUnitToCart(productId: string): void;
     setProductAsFavorite(product: ProductModel): void;
     setProductAsNotFavorite(product: ProductModel): void;
 };
@@ -38,14 +36,11 @@ export const fetchProductsSuccess = (products: ProductModel[]): DispatchAction =
 
 export const createActions = (dispatch: React.Dispatch<any>) : GroceryActionsDispatcher => {
     return {
-        addToCart: (product: ProductModel) => {
-            dispatch({ type: ActionType.AddToCart, payload: product.id })
+        removeOneProductUnitFromCart: (productId: string) => {
+            dispatch({ type: ActionType.RemoveOneProductUnitFromCart, payload: productId })
         },
-        removeOneUnitFromCart: (productId: string) => {
-            dispatch({ type: ActionType.RemoveOneUnitFromCart, payload: productId })
-        },
-        addOneUnitFromCart: (productId: string) => {
-            dispatch({ type: ActionType.AddOneUnitFromCart, payload: productId })
+        addOneProductUnitToCart: (productId: string) => {
+            dispatch({ type: ActionType.AddOneProductUnitToCart, payload: productId })
         },
         fetchProducts: (page: number) => {
             dispatch({ type: ActionType.FetchProducts })
