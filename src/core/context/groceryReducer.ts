@@ -127,7 +127,7 @@ export const groceryReducer = (state: GroceryState = initialState, action: Dispa
             cartItem = {
               productId,
               quantity: 0,
-              totalPrice: product.price
+              totalPrice: 0
             }
 
             state.cart.items.allIds.push(productId);
