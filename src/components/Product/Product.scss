@@ -27,18 +27,25 @@
         background-color: white;
         transition: all 0.3s ease;
 
-        &:hover {
-            mask-image: url(/heart-filled.svg);
-            background-color: red;
+        @media (min-width: $mobile) {
+            &:hover {
+                mask-image: url(/heart-filled.svg);
+                background-color: red;
+            }
+
+            &.favorite {    
+                &:hover {
+                    mask-image: url(/heart.svg);
+                }
+            }
         }
+
+        
 
         &.favorite {
             mask-image: url(/heart-filled.svg);
             background-color: red;
 
-            &:hover {
-                mask-image: url(/heart.svg);
-            }
         }
     }
 

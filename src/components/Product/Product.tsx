@@ -37,12 +37,13 @@ const Product: React.FC<ProductModel> = (product) => {
         }
     }
 
-    let toggleFavorite = () => {
+    let toggleFavorite = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (product.favorite) {
             dispatcher.setProductAsNotFavorite(product);
         } else {
             dispatcher.setProductAsFavorite(product);
         }
+        event.stopPropagation();
     }
 
   
