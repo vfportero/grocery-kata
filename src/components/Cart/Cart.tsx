@@ -26,7 +26,7 @@ const Cart: React.FC = () => {
   return (
     <div className="cart">
       <div className="title">
-        <MediaQuery maxDeviceWidth={1024}>
+        <MediaQuery maxWidth={1024}>
           <div className="back" onClick={backToProductList}>
             <span>🡄</span>
           </div>

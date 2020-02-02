@@ -11,10 +11,10 @@ const Product: React.FC<ProductModel> = (product) => {
     const {dispatch} = React.useContext<any>(GroceryContext);
     const dispatcher = createActions(dispatch)
     const isMobileResolution = useMediaQuery({
-        query: '(max-device-width: 600px)'
+        query: '(max-width: 600px)'
     })
     const isDesktopResolution = useMediaQuery({
-        query: '(min-device-width: 1024px)'
+        query: '(min-width: 1024px)'
     })
     const history = useHistory();
 
